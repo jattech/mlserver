@@ -23,7 +23,9 @@ services:
       - FTP_USER=test
       - FTP_PASS=test
     ports:
-      - "21:21"        
+      - "21:21" 
+    volumes: 
+      - ./mlflow-server/artifacts:/ftp-home/home/test/      
   postgres:
     build: ./postgres-mlflow
     container_name: mlserver-db
@@ -32,6 +34,8 @@ services:
       POSTGRES_PASSWORD: 'mlflow'
     ports:
       - "5432:5432"
+    volumes:
+      - ./postgres-mlflow/db:/var/lib/postgresql/data
   jupyter:
     environment:
       - JUPYTER_ENABLE_LAB=yes  
@@ -40,4 +44,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ./jupyter-mlflow/Demos:/home/jovyan/work
+      - ./jupyter-mlflow/Experiments:/home/jovyan/work
+
+
+      
